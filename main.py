@@ -64,15 +64,17 @@ def check_strength(password):
         verdict += ' A special character in your password would make it great.'
 
 
-    final =f"\nPassword: {password}. \n\nLength = {len(password)}. \n\nScore = {score} out of 100. \n\nVerdict: {verdict}"
+    final =f"______ \n\nPassword: {password}. \n\nLength = {len(password)}. \n\nScore = {score} out of 100. \n\nVerdict: {verdict} \n\n_______"
 
     print(final)
 
 def main():
-    print("🔏Vault Check🔏")
-    inputpassword = input("Enter your password to check if it is secure. 😉 ")
-    userpassword = inputpassword
-    
-    check_strength(userpassword)
+    print("🔏  Vault Check  🔏")
+    start = input("Do you want to enter a password to check if it is secure? 😉 (y / n)")
+    if start == 'y':
+        inputpassword = input("Enter a password.")
+        userpassword = inputpassword    
+        check_strength(userpassword)
+    else: exit
 
 main()
