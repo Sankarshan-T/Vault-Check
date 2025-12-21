@@ -153,14 +153,13 @@ body { margin: 0; }
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 60px;
     gap: 100px;
     background-color: #a0cfff;
     color: #06283D;
 }
 
 .checker-box {
-    margin-top: -100px;
+    margin-top: -70px;
     font-family: "Space Mono";
     background: #bedfff;
     padding: 30px;
@@ -266,7 +265,7 @@ body { margin: 0; }
 /* Suggestions */
 
 .suggestionsbox {
-    margin-top: -100px;
+    margin-top: -70px;
     font-family: "Space Mono";
     background: #bedfff;
     padding: 30px;
@@ -290,8 +289,30 @@ body { margin: 0; }
 }
 
 .suggestpasswords li {
-    color: #06283D;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e6f2ff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-family: "Space Mono";
 }
+
+.copy-btn {
+    background-color: #1B6FA8;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.copy-btn:hover {
+    background-color: #155a87;
+}
+
 
 
 /* About Section */

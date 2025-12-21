@@ -1,43 +1,30 @@
-// ----------------------------
-// COMMON PASSWORD LIST
-// ----------------------------
+// Common passwords list (small demo list)
 const commonPasswords = [
-    "password",
-    "123456",
-    "12345678",
-    "qwerty",
-    "admin",
-    "letmein",
-    "welcome",
-    "password123"
+    "password", "123456", "qwerty", "admin", "letmein"
 ];
 
-// ----------------------------
-// RUN ANALYSIS (BUTTON / ENTER)
-// ----------------------------
-function runAnalysis() {
-    const passwordInput = document.getElementById("password");
-    const password = passwordInput.value;
+// Toggle show / hide password
+function togglePassword() {
+    const input = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
 
-    if (password.trim() === "") return;
-
-    document.getElementById("results").classList.remove("hidden");
-
-    analyzePassword(password);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
 }
 
-// ----------------------------
-// ENTER KEY SUPPORT
-// ----------------------------
+// Enter key triggers analysis
 function handleEnter(event) {
     if (event.key === "Enter") {
         runAnalysis();
     }
 }
 
-// ----------------------------
-// CLEAR BUTTON
-// ----------------------------
+// Clear everything
 function clearPassword() {
     document.getElementById("password").value = "";
     document.getElementById("results").classList.add("hidden");
@@ -48,104 +35,116 @@ function clearPassword() {
     document.getElementById("common-warning").textContent = "";
     document.getElementById("pattern-warning").textContent = "";
 
-    resetRules();
-}
+    document.querySelectorAll(".rules li").forEach(li => {
+        li.textContent = "❌ " + li.textContent.slice(2);
+    });
 
-// ----------------------------
-// PASSWORD ANALYSIS
-// ----------------------------
-function analyzePassword(password) {
-    const lengthRule = password.length >= 8;
-    const upperRule = /[A-Z]/.test(password);
-    const lowerRule = /[a-z]/.test(password);
-    const numberRule = /[0-9]/.test(password);
-    const symbolRule = /[^A-Za-z0-9]/.test(password);
-
-    updateRule("length", lengthRule);
-    updateRule("uppercase", upperRule);
-    updateRule("lowercase", lowerRule);
-    updateRule("number", numberRule);
-    updateRule("symbol", symbolRule);
-
-    const score = [
-        lengthRule,
-        upperRule,
-        lowerRule,
-        numberRule,
-        symbolRule
-    ].filter(Boolean).length;
-
-    updateStrength(score);
-    checkCommonPassword(password);
-    checkRepeatedPatterns(password);
-}
-
-// ----------------------------
-// UPDATE RULE UI
-// ----------------------------
-function updateRule(id, passed) {
-    const el = document.getElementById(id);
-    const text = el.textContent.slice(2);
-    el.textContent = (passed ? "✅ " : "❌ ") + text;
-}
-
-// ----------------------------
-// RESET RULES (ON CLEAR)
-// ----------------------------
-function resetRules() {
-    const rules = ["length", "uppercase", "lowercase", "number", "symbol"];
-    rules.forEach(id => {
-        const el = document.getElementById(id);
-        el.textContent = "❌ " + el.textContent.slice(2);
+    // Clear suggestions
+    document.querySelectorAll(".suggestpasswords li").forEach(li => {
+        li.textContent = "-";
     });
 }
 
-// ----------------------------
-// STRENGTH BAR
-// ----------------------------
-function updateStrength(score) {
+// Main analysis function
+function runAnalysis() {
+    const password = document.getElementById("password").value;
+    if (!password) return;
+
+    document.getElementById("results").classList.remove("hidden");
+
+    let score = 0;
+
+    // Rule checks
+    const rules = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /[0-9]/.test(password),
+        symbol: /[^A-Za-z0-9]/.test(password)
+    };
+
+    for (let rule in rules) {
+        const el = document.getElementById(rule);
+        if (rules[rule]) {
+            el.textContent = "✅ " + el.textContent.slice(2);
+            score++;
+        } else {
+            el.textContent = "❌ " + el.textContent.slice(2);
+        }
+    }
+
+    // Strength bar
     const strengthFill = document.getElementById("strength-fill");
     const strengthText = document.getElementById("strength-text");
 
-    const levels = ["Very Weak", "Weak", "Okay", "Strong", "Very Strong"];
-    const colors = ["red", "orange", "gold", "lightgreen", "green"];
+    const percent = (score / 5) * 100;
+    strengthFill.style.width = percent + "%";
 
-    strengthFill.style.width = (score / 5) * 100 + "%";
-    strengthFill.style.backgroundColor = colors[score - 1] || "red";
-    strengthText.textContent = "Strength: " + (levels[score - 1] || "Very Weak");
-}
-
-// ----------------------------
-// COMMON PASSWORD CHECK
-// ----------------------------
-function checkCommonPassword(password) {
-    const warning = document.getElementById("common-warning");
-
-    if (commonPasswords.includes(password.toLowerCase())) {
-        warning.textContent = "⚠️ This is a very common password.";
+    if (score <= 2) {
+        strengthFill.style.background = "red";
+        strengthText.textContent = "Strength: Weak";
+    } else if (score === 3 || score === 4) {
+        strengthFill.style.background = "orange";
+        strengthText.textContent = "Strength: Medium";
     } else {
-        warning.textContent = "";
+        strengthFill.style.background = "green";
+        strengthText.textContent = "Strength: Strong";
     }
+
+    // Common password warning
+    const commonWarning = document.getElementById("common-warning");
+    if (commonPasswords.includes(password.toLowerCase())) {
+        commonWarning.textContent = "⚠ This is a very common password.";
+    } else {
+        commonWarning.textContent = "";
+    }
+
+    // Generate suggestions
+    generateSuggestions(password);
 }
 
-// ----------------------------
-// REPEATED CHARACTER / PATTERN CHECK
-// ----------------------------
-function checkRepeatedPatterns(password) {
-    const warning = document.getElementById("pattern-warning");
+// Suggestions generator
+function generateSuggestions(base) {
+    const suggestions = [];
 
-    if (/^(.)\1+$/.test(password)) {
-        warning.textContent = "⚠️ Repeated characters detected.";
-        return;
-    }
+    const randNum = Math.floor(Math.random() * 100);
+    const symbols = ["!", "@", "#", "_"];
 
-    if (/^(.+)\1+$/.test(password)) {
-        warning.textContent = "⚠️ Repeating pattern detected.";
-        return;
-    }
+    suggestions.push(
+        base.charAt(0).toUpperCase() + base.slice(1) + symbols[0] + randNum
+    );
+    suggestions.push(base + symbols[1] + "2025");
+    suggestions.push(
+        base.replace(/a/gi, "@").replace(/s/gi, "$") + randNum
+    );
+    suggestions.push(base + "_" + randNum + "A");
+    suggestions.push("P" + base + symbols[2] + randNum);
 
-    warning.textContent = "";
+    const listItems = document.querySelectorAll(".suggestpasswords li");
+
+    listItems.forEach((li, index) => {
+        const textSpan = li.querySelector(".suggest-text");
+        textSpan.textContent = suggestions[index] || "-";
+    });
 }
+
+function copySuggestion(button) {
+    const text = button.parentElement
+        .querySelector(".suggest-text")
+        .textContent;
+
+    if (text === "-" || !text) return;
+
+    navigator.clipboard.writeText(text);
+
+    // Feedback
+    button.textContent = "Copied!";
+    setTimeout(() => {
+        button.textContent = "Copy";
+    }, 1200);
+}
+
+
 
 // ----------------------------
 // EYE ICON TOGGLE (SHOW/HIDE)
