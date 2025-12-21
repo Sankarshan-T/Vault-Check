@@ -1,0 +1,331 @@
+/* Fonts */
+.special-elite-regular {
+    font-family: "Special Elite", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.space-mono-regular {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Animations */
+@keyframes floatLock {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* General */
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background-color: #1B6FA8;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-right: 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.navtitle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navimg {
+    width: 6%;
+    height: auto;
+    padding: 20px;
+}
+
+.navheading {
+    font-family: "Special Elite";
+    color: #06283D;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+}
+
+.list a {
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    font-family: "Space Mono";
+    text-decoration: none;
+    color: #06283D;
+    height: 100%;
+}
+
+.list a:hover {
+    background-color: #3e9eff;
+    transition: 0.3s ease background-color;
+}
+
+/* Home Section */
+#home {
+    min-height: 100vh;
+    padding-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #bedfff;
+    background-image: radial-gradient(circle at 1px 1px, rgba(6, 40, 61, 0.511) 1px, transparent 0);
+    background-size: 40px 40px;
+}
+
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1100px;
+    padding: 40px;
+}
+
+.home-image img {
+    width: 280px;
+    height: auto;
+    animation: floatLock 4s ease-in-out infinite;
+    transition: filter 0.3s ease;
+}
+
+.home-image img:hover {
+    filter: drop-shadow(0 0 12px rgba(27, 111, 168, 0.6));
+}
+
+.home-text {
+    max-width: 500px;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.home-title {
+    font-family: "Special Elite";
+    font-size: 4.5em;
+    margin: 0;
+    color: #06283D;
+}
+
+.home-tagline {
+    font-family: "Space Mono";
+    font-size: 1.2em;
+    margin: 15px 0 25px;
+    color: #06283D;
+}
+
+.home-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    background-color: #1B6FA8;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: "Space Mono";
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.home-btn:hover { background-color: #155a87; }
+
+/* Checker Section */
+#checker {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 60px;
+    gap: 100px;
+    background-color: #a0cfff;
+    color: #06283D;
+}
+
+.checker-box {
+    margin-top: -100px;
+    font-family: "Space Mono";
+    background: #bedfff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    height: fit-content;
+    text-align: center;
+}
+
+/* Password Input with Eye Icon */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.password-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 40px 10px 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: "Space Mono";
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.password-wrapper i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #1B6FA8;
+    font-size: 1.1em;
+}
+
+.password-wrapper i:hover { color: #155a87; }
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-family: "Space Mono";
+    cursor: pointer;
+    background-color: #1B6FA8;
+    color: white;
+    transition: 0.3s;
+}
+
+.button-group button:hover { opacity: 0.9; }
+
+.clear-btn { background-color: #6b6b6b; }
+
+/* Hidden Results */
+.hidden { display: none; }
+
+.strength-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 6px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+#strength-fill {
+    height: 100%;
+    width: 0%;
+    background-color: red;
+    border-radius: 6px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Rules & Warnings */
+.rules {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.rules li {
+    font-size: 0.9em;
+    margin: 6px 0;
+}
+
+.warning {
+    color: #b30000;
+    font-size: 0.85em;
+    margin-top: 8px;
+}
+
+/* Suggestions */
+
+.suggestionsbox {
+    margin-top: -100px;
+    font-family: "Space Mono";
+    background: #bedfff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    height: fit-content;
+    text-align: center;
+}
+
+.suggestions {
+    font-family: "Space Mono";
+    font-size: 1.3em;
+    text-align: left;
+}
+
+.suggestpasswords {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.suggestpasswords li {
+    color: #06283D;
+}
+
+
+/* About Section */
+#about {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6cb0f4;
+    color: #06283D;
+}
+
+/* Home Lock Animation (Extra) */
+.lock {
+    width: 20%;
+    height: auto;
+    animation: floatLock 3s ease-in-out infinite;
+}
+
+/* Home Page Title */
+.vcheck {
+    font-size: 6em;
+    font-family: "Special Elite";
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .home-title { font-size: 3.2em; }
+    .home-image img { width: 220px; }
+}
