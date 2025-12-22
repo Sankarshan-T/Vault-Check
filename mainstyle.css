@@ -116,6 +116,8 @@ body { margin: 0; }
 .home-text {
     max-width: 500px;
     animation: fadeInUp 1s ease forwards;
+    animation: floatLock 4s ease-in-out infinite;
+    transition: filter 0.3s ease;
 }
 
 .home-title {
@@ -124,6 +126,8 @@ body { margin: 0; }
     margin: 0;
     color: #06283D;
 }
+
+.home-title:hover { filter: drop-shadow(0 0 12px rgba(27, 111, 168, 0.6)); }
 
 .home-tagline {
     font-family: "Space Mono";
@@ -159,7 +163,7 @@ body { margin: 0; }
 }
 
 .checker-box {
-    margin-top: -70px;
+    margin-top: -50px;
     font-family: "Space Mono";
     background: #bedfff;
     padding: 30px;
@@ -319,11 +323,31 @@ body { margin: 0; }
 #about {
     width: 100%;
     min-height: 100vh;
+    padding-top: 70px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     background-color: #6cb0f4;
     color: #06283D;
+}
+
+.about {
+    font-family: 'Special Elite';
+}
+
+.aboutcontent {
+    font-family: 'Space Mono';
+    text-align: center;
+    width: 50%;
+    font-size: 1.3em;
+}
+
+.copyright {
+    margin-top: 15%;
+    font-family: 'Space Mono';
+    text-align: center;
+    width: 50%;
+    font-size: 0.9em;
 }
 
 /* Home Lock Animation (Extra) */

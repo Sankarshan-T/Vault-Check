@@ -1,6 +1,11 @@
+window.onload = function() {
+    var audio = document.getElementById("bgmusic");
+    audio.volume = 0.008; 
+}
+
 // Common passwords list (small demo list)
 const commonPasswords = [
-    "password", "123456", "qwerty", "admin", "letmein"
+    "password", "123456", "qwerty", "admin", "letmein", "hello"
 ];
 
 // Toggle show / hide password
@@ -85,10 +90,10 @@ function runAnalysis() {
         strengthText.textContent = "Strength: Weak";
     } else if (score === 3 || score === 4) {
         strengthFill.style.background = "orange";
-        strengthText.textContent = "Strength: Medium";
+        strengthText.textContent = "Strength: Okay";
     } else {
         strengthFill.style.background = "green";
-        strengthText.textContent = "Strength: Strong";
+        strengthText.textContent = "Strength: Very Strong";
     }
 
     // Common password warning
